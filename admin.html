@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Admin — Pratik Akole Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<div class="admin-topbar">
+  <div class="admin-topbar-inner">
+    <span class="nav-logo">pratik<span>.akole</span> · <span class="admin-tag">admin</span></span>
+    <div id="adminConnStatus" class="admin-conn-status">Not connected</div>
+    <button class="btn btn-outline" id="logoutBtn" style="display:none;">Log out</button>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="admin-wrap" id="loginScreen">
+  <div class="admin-card admin-login-card">
+    <h2>🔐 Admin access</h2>
+    <p class="admin-help">This page edits your live site by committing directly to your GitHub repo. Only you should have this URL and token — it is never linked from the public site.</p>
+
+    <div class="form-row">
+      <label for="repoOwner">GitHub username</label>
+      <input type="text" id="repoOwner" placeholder="akole-pratik">
+    </div>
+    <div class="form-row">
+      <label for="repoName">Repository name</label>
+      <input type="text" id="repoName" placeholder="pratik-akole.portfolio.io">
+    </div>
+    <div class="form-row">
+      <label for="repoBranch">Branch</label>
+      <input type="text" id="repoBranch" value="main">
+    </div>
+    <div class="form-row">
+      <label for="repoToken">GitHub personal access token</label>
+      <input type="password" id="repoToken" placeholder="ghp_...">
+    </div>
+    <label class="admin-checkbox">
+      <input type="checkbox" id="rememberDevice"> Remember these details on this device (skip token — you'll re-enter that each visit)
+    </label>
+
+    <button class="btn btn-primary" id="connectBtn">Connect</button>
+    <p class="form-status" id="loginStatus"></p>
+
+    <div class="admin-demo-divider"><span>or</span></div>
+    <button class="btn btn-outline" id="demoBtn" style="width:100%;justify-content:center;">🎮 Try demo mode (browse the panel, no GitHub needed)</button>
+    <p class="admin-help" style="margin:10px 0 0;font-size:12.5px;">Demo mode loads your current content read-only-safe — you can click around and add/edit freely, but nothing saves until you connect with a real token above.</p>
+
+    <details class="admin-help-details">
+      <summary>How do I get a token?</summary>
+      <ol>
+        <li>On GitHub, go to <strong>Settings → Developer settings → Personal access tokens → Fine-grained tokens</strong>.</li>
+        <li>Click <strong>Generate new token</strong>.</li>
+        <li>Under <strong>Repository access</strong>, choose <strong>Only select repositories</strong> and pick this portfolio repo only.</li>
+        <li>Under <strong>Permissions → Repository permissions</strong>, set <strong>Contents</strong> to <strong>Read and write</strong>.</li>
+        <li>Generate, copy the token, and paste it above. It's only ever stored in your own browser, never in the code.</li>
+      </ol>
+    </details>
+  </div>
+</div>
+
+<!-- EDITOR -->
+<div class="admin-wrap" id="editorScreen" style="display:none;">
+  <div class="admin-shell">
+    <nav class="admin-side">
+      <button class="admin-nav-btn active" data-panel="panel-hero">Hero</button>
+      <button class="admin-nav-btn" data-panel="panel-about">About</button>
+      <button class="admin-nav-btn" data-panel="panel-experience">Experience</button>
+      <button class="admin-nav-btn" data-panel="panel-skills">Skills</button>
+      <button class="admin-nav-btn" data-panel="panel-certs">Certifications</button>
+      <button class="admin-nav-btn" data-panel="panel-projects">Projects</button>
+      <button class="admin-nav-btn" data-panel="panel-ai">AI & Automation</button>
+      <button class="admin-nav-btn" data-panel="panel-contact">Contact</button>
+      <button class="btn btn-primary admin-save-btn" id="saveBtn">💾 Save to GitHub</button>
+      <a href="index.html" target="_blank" class="admin-preview-link">↗ View live site</a>
+      <p class="form-status" id="saveStatus"></p>
+    </nav>
+
+    <main class="admin-main">
+      <section class="admin-panel active" id="panel-hero">
+        <h2>Hero</h2>
+        <div class="form-row"><label>Full name</label><input type="text" id="h-name"></div>
+        <div class="form-row"><label>Short name (used in "Hi, I'm ___")</label><input type="text" id="h-shortName"></div>
+        <div class="form-row"><label>Status pill</label><input type="text" id="h-status"></div>
+        <div class="form-row"><label>Tagline — role now</label><input type="text" id="h-taglineStart"></div>
+        <div class="form-row"><label>Tagline — role becoming</label><input type="text" id="h-taglineEnd"></div>
+        <div class="form-row"><label>Short bio</label><textarea id="h-bio"></textarea></div>
+        <div class="form-row"><label>LinkedIn URL</label><input type="text" id="h-linkedin"></div>
+        <div class="form-row"><label>GitHub URL</label><input type="text" id="h-github"></div>
+        <div class="form-row">
+          <label>Resume PDF</label>
+          <input type="file" id="h-resumeFile" accept="application/pdf">
+          <input type="text" id="h-resumeUrl" placeholder="assets/uploads/resume.pdf">
+        </div>
+        <h3>Stats</h3>
+        <div id="h-stats" class="admin-repeat"></div>
+        <button class="btn btn-outline" id="h-stats-add">+ Add stat</button>
+      </section>
+
+      <section class="admin-panel" id="panel-about">
+        <h2>About</h2>
+        <div class="form-row"><label>Summary paragraph</label><textarea id="a-summary" rows="6"></textarea></div>
+        <h3>Quick facts</h3>
+        <div id="a-facts" class="admin-repeat"></div>
+        <button class="btn btn-outline" id="a-facts-add">+ Add quick fact</button>
+      </section>
+
+      <section class="admin-panel" id="panel-experience">
+        <h2>Experience</h2>
+        <div id="exp-list" class="admin-repeat"></div>
+        <button class="btn btn-outline" id="exp-add">+ Add role</button>
+      </section>
+
+      <section class="admin-panel" id="panel-skills">
+        <h2>Skills</h2>
+        <div id="skills-list" class="admin-repeat"></div>
+        <button class="btn btn-outline" id="skills-add">+ Add skill category</button>
+      </section>
+
+      <section class="admin-panel" id="panel-certs">
+        <h2>Certifications</h2>
+        <div id="certs-list" class="admin-repeat"></div>
+        <button class="btn btn-outline" id="certs-add">+ Add certification</button>
+        <h2 style="margin-top:32px;">Achievements</h2>
+        <div id="ach-list" class="admin-repeat"></div>
+        <button class="btn btn-outline" id="ach-add">+ Add achievement</button>
+      </section>
+
+      <section class="admin-panel" id="panel-projects">
+        <h2>Projects</h2>
+        <div id="proj-list" class="admin-repeat"></div>
+        <button class="btn btn-outline" id="proj-add">+ Add project</button>
+      </section>
+
+      <section class="admin-panel" id="panel-ai">
+        <h2>AI & Automation</h2>
+        <div class="form-row"><label>Intro line</label><textarea id="ai-intro"></textarea></div>
+        <h3>Roadmap stages</h3>
+        <div id="ai-stages" class="admin-repeat"></div>
+        <button class="btn btn-outline" id="ai-stages-add">+ Add stage</button>
+        <h3>Tools/things you're learning (comma separated)</h3>
+        <div class="form-row"><input type="text" id="ai-tools"></div>
+      </section>
+
+      <section class="admin-panel" id="panel-contact">
+        <h2>Contact</h2>
+        <div class="form-row"><label>Email</label><input type="text" id="c-email"></div>
+        <div class="form-row"><label>Phone</label><input type="text" id="c-phone"></div>
+        <div class="form-row"><label>Location</label><input type="text" id="c-location"></div>
+        <div class="form-row"><label>WhatsApp number (digits only, with country code)</label><input type="text" id="c-whatsapp"></div>
+        <div class="form-row"><label>LinkedIn URL</label><input type="text" id="c-linkedin"></div>
+        <div class="form-row"><label>GitHub URL</label><input type="text" id="c-github"></div>
+        <div class="form-row"><label>Formspree endpoint (from formspree.io)</label><input type="text" id="c-formspree"></div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
