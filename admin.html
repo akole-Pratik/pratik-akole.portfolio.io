@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Editor — Pratik Akole Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F8F9FD; --panel: #FFFFFF; --border: #E7E9F5; --ink: #12142B; --ink-soft: #565A78; --ink-faint: #9497B5;
+  --accent: #6C5CE7; --accent-2: #22C7E5; --accent-ink: #4A3BC7; --accent-soft: #EFECFF;
+  --gradient: linear-gradient(135deg, #6C5CE7 0%, #22C7E5 100%);
+  --green: #16B981; --green-soft: #E4F9F0; --red: #E1435A; --red-soft: #FDEAED;
+  --font-display: 'Sora', 'Segoe UI', sans-serif; --font-body: 'Inter', 'Segoe UI', sans-serif;
+  --radius: 14px; --radius-sm: 9px;
+  --shadow: 0 10px 28px rgba(18,20,43,0.08);
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); line-height: 1.5; }
+h1,h2,h3,h4 { font-family: var(--font-display); margin: 0; letter-spacing: -0.01em; }
+button { font-family: inherit; cursor: pointer; }
+input, textarea, select { font-family: inherit; }
+
+.topbar { position: sticky; top: 0; z-index: 50; background: rgba(248,249,253,0.92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.topbar .brand { font-family: var(--font-display); font-weight: 700; font-size: 16px; }
+.brand span { background: var(--gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.topbar-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px; border-radius: 999px; font-weight: 700; font-size: 13.5px; border: 1px solid var(--border); background: var(--panel); color: var(--ink); transition: all 0.15s; }
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn-primary { background: var(--gradient); color: #fff; border-color: transparent; box-shadow: 0 8px 18px rgba(108,92,231,0.28); }
+.btn-primary:hover { color: #fff; opacity: 0.92; }
+.btn-danger { color: var(--red); }
+.btn-danger:hover { border-color: var(--red); }
+.btn-sm { padding: 7px 13px; font-size: 12.5px; }
+input[type=file] { display: none; }
+
+.wrap { max-width: 940px; margin: 0 auto; padding: 28px 24px 100px; }
+.intro { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 22px; margin-bottom: 26px; font-size: 14px; color: var(--ink-soft); }
+.intro strong { color: var(--ink); }
+
+.card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; }
+.card h2 { font-size: 18px; margin-bottom: 4px; }
+.card .hint { font-size: 12.5px; color: var(--ink-faint); margin-bottom: 18px; }
+.card > .hint:first-of-type { margin-top: 2px; }
+
+.field { display: grid; gap: 6px; margin-bottom: 14px; }
+.field label { font-size: 12px; font-weight: 700; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.03em; }
+.field input, .field textarea { padding: 10px 13px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); color: var(--ink); font-size: 14px; width: 100%; }
+.field textarea { resize: vertical; min-height: 70px; }
+.field .note { font-size: 11.5px; color: var(--ink-faint); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media (max-width: 640px) { .row2, .row3 { grid-template-columns: 1fr; } }
+
+.subcard { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 18px; margin-bottom: 14px; position: relative; }
+.subcard-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.subcard-head .tag { font-size: 11px; font-weight: 700; color: var(--accent-ink); background: var(--accent-soft); padding: 3px 10px; border-radius: 999px; }
+.add-btn { border: 1.5px dashed var(--border); background: transparent; color: var(--accent-ink); border-radius: var(--radius-sm); padding: 12px; width: 100%; font-weight: 700; font-size: 13.5px; }
+.add-btn:hover { border-color: var(--accent); background: var(--accent-soft); }
+.remove-btn { background: var(--red-soft); color: var(--red); border: none; border-radius: 999px; width: 26px; height: 26px; font-size: 13px; font-weight: 700; flex-shrink: 0; }
+
+.status-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(120%); background: var(--ink); color: #fff; padding: 12px 22px; border-radius: 999px; font-size: 13.5px; font-weight: 600; box-shadow: var(--shadow); transition: transform 0.25s ease; z-index: 100; }
+.status-bar.show { transform: translateX(-50%) translateY(0); }
+.status-bar.error { background: var(--red); }
+
+.checkbox-row { display: flex; align-items: center; gap: 8px; }
+.checkbox-row input { width: auto; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">Content Editor <span>·</span> pratik.akole</div>
+  <div class="topbar-actions">
+    <label class="btn" for="loadFile">📂 Load content.json</label>
+    <input type="file" id="loadFile" accept="application/json">
+    <button class="btn" id="loadDefaultBtn">↺ Load current site data</button>
+    <button class="btn btn-primary" id="saveBtn">⬇ Save content.json</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="intro">
+    <strong>How this works:</strong> this page edits your portfolio's data only — never the design. Click <strong>"Load current site data"</strong> to start from what's live now, make your changes below, then click <strong>"Save content.json"</strong> to download the updated file. Replace <code>data/content.json</code> in your project folder with the downloaded file and re-upload to your host (or just overwrite it if you use GitHub Desktop / similar). Nothing here is sent anywhere — it all happens in your browser.
+  </div>
+
+  <!-- HERO -->
+  <div class="card">
+    <h2>Hero</h2>
+    <p class="hint">The top of your homepage.</p>
+    <div class="row2">
+      <div class="field"><label>Full name</label><input id="h_name"></div>
+      <div class="field"><label>Short name (used in "Hi, I'm ___")</label><input id="h_shortName"></div>
+    </div>
+    <div class="field"><label>Status badge</label><input id="h_status" placeholder="Open to opportunities"></div>
+    <div class="row2">
+      <div class="field"><label>Tagline — role now</label><input id="h_taglineStart" placeholder="Data Analyst"></div>
+      <div class="field"><label>Tagline — role becoming</label><input id="h_taglineEnd" placeholder="AI & Automation"></div>
+    </div>
+    <div class="field"><label>Bio</label><textarea id="h_bio"></textarea></div>
+    <div class="row3">
+      <div class="field"><label>Resume file URL</label><input id="h_resumeUrl" placeholder="resume.pdf"><span class="note">Add a resume.pdf next to index.html and put "resume.pdf" here.</span></div>
+      <div class="field"><label>LinkedIn URL</label><input id="h_linkedin" placeholder="https://linkedin.com/in/..."></div>
+      <div class="field"><label>GitHub URL</label><input id="h_github" placeholder="https://github.com/..."></div>
+    </div>
+    <div class="field"><label>Skill badges (comma-separated)</label><input id="h_badges" placeholder="Python, SQL, Power BI"></div>
+    <h3 style="font-size:14px;margin:18px 0 10px;">Stats (shown as 3 highlight numbers)</h3>
+    <div id="statsWrap"></div>
+    <button class="add-btn" id="addStat" type="button">+ Add stat</button>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="card">
+    <h2>About</h2>
+    <div class="field"><label>Summary paragraph</label><textarea id="a_summary" style="min-height:110px;"></textarea></div>
+    <h3 style="font-size:14px;margin:18px 0 10px;">Quick facts</h3>
+    <div id="factsWrap"></div>
+    <button class="add-btn" id="addFact" type="button">+ Add quick fact</button>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="card">
+    <h2>Work experience</h2>
+    <p class="hint">Order here is the order shown on the site — most recent first.</p>
+    <div id="expWrap"></div>
+    <button class="add-btn" id="addExp" type="button">+ Add role</button>
+  </div>
+
+  <!-- SKILLS -->
+  <div class="card">
+    <h2>Skills & tools</h2>
+    <p class="hint">Grouped into categories. Level is one of: Core, Working, Learning.</p>
+    <div id="skillsWrap"></div>
+    <button class="add-btn" id="addSkillCat" type="button">+ Add skill category</button>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="card">
+    <h2>Services</h2>
+    <p class="hint">Services you offer outside a full-time role — shown as cards between Skills and Projects.</p>
+    <div id="servicesWrap"></div>
+    <button class="add-btn" id="addService" type="button">+ Add service</button>
+  </div>
+
+  <!-- CERTIFICATIONS -->
+  <div class="card">
+    <h2>Certifications</h2>
+    <div id="certsWrap"></div>
+    <button class="add-btn" id="addCert" type="button">+ Add certification</button>
+  </div>
+
+  <!-- ACHIEVEMENTS -->
+  <div class="card">
+    <h2>Achievements</h2>
+    <div id="achWrap"></div>
+    <button class="add-btn" id="addAch" type="button">+ Add achievement</button>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="card">
+    <h2>Projects</h2>
+    <p class="hint">Each project opens a detailed case-study modal on the site. One item per line for lists.</p>
+    <div id="projWrap"></div>
+    <button class="add-btn" id="addProj" type="button">+ Add project</button>
+  </div>
+
+  <!-- AI AUTOMATION -->
+  <div class="card">
+    <h2>AI & Automation section</h2>
+    <div class="field"><label>Intro line</label><textarea id="ai_intro"></textarea></div>
+    <h3 style="font-size:14px;margin:18px 0 10px;">Roadmap stages</h3>
+    <div id="stagesWrap"></div>
+    <button class="add-btn" id="addStage" type="button">+ Add stage</button>
+    <div class="field" style="margin-top:16px;"><label>Tools you're learning (comma-separated)</label><input id="ai_tools"></div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="card">
+    <h2>Contact</h2>
+    <div class="row2">
+      <div class="field"><label>Email</label><input id="c_email"></div>
+      <div class="field"><label>Phone</label><input id="c_phone"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>Location</label><input id="c_location"></div>
+      <div class="field"><label>WhatsApp number (digits only, optional)</label><input id="c_whatsapp" placeholder="918446186985"></div>
+    </div>
+    <div class="row2">
+      <div class="field"><label>LinkedIn URL</label><input id="c_linkedin"></div>
+      <div class="field"><label>GitHub URL</label><input id="c_github"></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="status-bar" id="statusBar"></div>
+
+<script>
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html !== undefined) n.innerHTML = html; return n; };
+const uid = (p='id') => p + '-' + Math.random().toString(36).slice(2, 9);
+
+let state = null;
+
+function showStatus(msg, isError) {
+  const bar = $('#statusBar');
+  bar.textContent = msg;
+  bar.classList.toggle('error', !!isError);
+  bar.classList.add('show');
+  clearTimeout(showStatus._t);
+  showStatus._t = setTimeout(() => bar.classList.remove('show'), 3200);
+}
+
+function linesToArray(str) {
+  return (str || '').split('\n').map(s => s.trim()).filter(Boolean);
+}
+function arrayToLines(arr) {
+  return (arr || []).join('\n');
+}
+function csvToArray(str) {
+  return (str || '').split(',').map(s => s.trim()).filter(Boolean);
+}
+function arrayToCsv(arr) {
+  return (arr || []).join(', ');
+}
+
+// ---------- render form from state ----------
+function render() {
+  const d = state;
+
+  $('#h_name').value = d.hero.name || '';
+  $('#h_shortName').value = d.hero.shortName || '';
+  $('#h_status').value = d.hero.status || '';
+  $('#h_taglineStart').value = d.hero.taglineStart || '';
+  $('#h_taglineEnd').value = d.hero.taglineEnd || '';
+  $('#h_bio').value = d.hero.bio || '';
+  $('#h_resumeUrl').value = d.hero.resumeUrl || '';
+  $('#h_linkedin').value = d.hero.linkedin || '';
+  $('#h_github').value = d.hero.github || '';
+  $('#h_badges').value = arrayToCsv(d.hero.badges);
+
+  renderStats();
+  $('#a_summary').value = d.about.summary || '';
+  renderFacts();
+  renderExperience();
+  renderSkills();
+  renderServices();
+  renderCerts();
+  renderAchievements();
+  renderProjects();
+
+  $('#ai_intro').value = d.aiAutomation.intro || '';
+  renderStages();
+  $('#ai_tools').value = arrayToCsv(d.aiAutomation.toolsLearning);
+
+  $('#c_email').value = d.contact.email || '';
+  $('#c_phone').value = d.contact.phone || '';
+  $('#c_location').value = d.contact.location || '';
+  $('#c_whatsapp').value = d.contact.whatsapp || '';
+  $('#c_linkedin').value = d.contact.linkedin || '';
+  $('#c_github').value = d.contact.github || '';
+}
+
+function renderStats() {
+  const wrap = $('#statsWrap'); wrap.innerHTML = '';
+  state.hero.stats.forEach((s, i) => {
+    const card = el('div', 'subcard');
+    card.innerHTML = `
+      <div class="subcard-head"><span class="tag">Stat ${i+1}</span><button class="remove-btn" type="button">×</button></div>
+      <div class="row2">
+        <div class="field"><label>Value</label><input data-f="value" value="${escAttr(s.value)}"></div>
+        <div class="field"><label>Label</label><input data-f="label" value="${escAttr(s.label)}"></div>
+      </div>`;
+    card.querySelector('.remove-btn').addEventListener('click', () => { state.hero.stats.splice(i,1); renderStats(); });
+    card.querySelectorAll('[data-f]').forEach(inp => inp.addEventListener('input', () => { s[inp.dataset.f] = inp.value; }));
+    wrap.appendChild(card);
+  });
+}
+$('#addStat').addEventListener('click', () => { state.hero.stats.push({value:'', label:''}); renderStats(); });
+
+function renderFacts() {
+  const wrap = $('#factsWrap'); wrap.innerHTML = '';
+  state.about.quickFacts.forEach((f, i) => {
+    const card = el('div', 'subcard');
+    card.innerHTML = `
+      <div class="subcard-head"><span class="tag">Fact ${i+1}</span><button class="remove-btn" type="button">×</button></div>
+      <div class="row3">
+        <div class="field"><label>Icon (emoji)</label><input data-f="icon" value="${escAttr(f.icon)}"></div>
+        <div class="field"><label>Label</label><input data-f="label" value="${escAttr(f.label)}"></div>
+        <div class="field"><label>Value</label><input data-f="value" value="${escAttr(f.value)}"></div>
+      </div>`;
+    card.querySelector('.remove-btn').addEventListener('click', () => { state.about.quickFacts.splice(i,1); renderFacts(); });
+    card.querySelectorAll('[data-f]').forEach(inp => inp.addEventListener('input', () => { f[inp.dataset.f] = inp.value; }));
+    wrap.appendChild(card);
+  });
+}
+$('#addFact').addEventListener('click', () => { state.about.quickFacts.push({icon:'✨', label:'', value:''}); renderFacts(); });
+
+function renderExperience() {
+  const wrap = $('#expWrap'); wrap.innerHTML = '';
+  state.experience.forEach((e, i) => {
+    const card = el('div', 'subcard');
+    card.innerHTML = `
+      <div class="subcard-head"><span class="tag">${e.company || 'Role ' + (i+1)}</span><button class="remove-btn" type="button">×</button></div>
+      <div class="row3">
+        <div class="field"><label>Company</label><input data-f="company" value="${escAttr(e.company)}"></div>
+        <div class="field"><label>Role / title</label><input data-f="role" value="${escAttr(e.role)}"></div>
+        <div class="field"><label>Period</label><input data-f="period" value="${escAttr(e.period)}" placeholder="Jan 2024 – Present"></div>
+      </div>
+      <div class="field checkbox-row"><input type="checkbox" data-f="current" ${e.current ? 'checked' : ''}> <label style="text-transform:none;font-weight:600;">This is my current role</label></div>
+      <div class="field"><label>Bullet points (one per line)</label><textarea data-f="points" style="min-height:100px;">${escHtml(arrayToLines(e.points))}</textarea></div>`;
+    card.querySelector('.remove-btn').addEventListener('click', () => { state.experience.splice(i,1); renderExperience(); });
+    card.querySelector('[data-f="company"]').addEventListener('input', (ev) => { e.company = ev.target.value; card.querySelector('.tag').textContent = e.company || ('Role ' + (i+1)); });
+    card.querySelector('[data-f="role"]').addEventListener('input', (ev) => { e.role = ev.target.value; });
+    card.querySelector('[data-f="period"]').addEventListener('input', (ev) => { e.period = ev.target.value; });
+    card.querySelector('[data-f="current"]').addEventListener('change', (ev) => { e.current = ev.target.checked; });
+    card.querySelector('[data-f="points"]').addEventListener('input', (ev) => { e.points = linesToArray(ev.target.value); });
+    wrap.appendChild(card);
+  });
+}
+$('#addExp').addEventListener('click', () => { state.experience.unshift({id: uid('exp'), company:'', role:'', period:'', current:false, points:[]}); renderExperience(); });
+
+function renderSkills() {
+  const wrap = $('#skillsWrap'); wrap.innerHTML = '';
+  state.skills.forEach((cat, i) => {
+    const card = el('div', 'subcard');
+    card.innerHTML = `
+      <div class="subcard-head"><span class="tag">${cat.category || 'Category ' + (i+1)}</span><button class="remove-btn" type="button">×</button></div>
+      <div class="row2">
+        <div class="field"><label>Icon (emoji)</label><input data-f="icon" value="${escAttr(cat.icon)}"></div>
+        <div class="field"><label>Category name</label><input data-f="category" value="${escAttr(cat.category)}"></div>
+      </div>
+      <div class="field"><label>Items — one per line as "Name | Level" (Level: Core, Working, or Learning)</label>
+      <textarea data-f="items" style="min-height:90px;">${escHtml((cat.items||[]).map(it => `${it.name} | ${it.level}`).join('\n'))}</textarea></div>`;
+    card.querySelector('.remove-btn').addEventListener('click', () => { state.skills.splice(i,1); renderSkills(); });
+    card.querySelector('[data-f="icon"]').addEventListener('input', (ev) => { cat.icon = ev.target.value; });
+    card.querySelector('[data-f="category"]').addEventListener('input', (ev) => { cat.category = ev.target.value; card.querySelector('.tag').textContent = cat.category || ('Category ' + (i+1)); });
+    card.querySelector('[data-f="items"]').addEventListener('input', (ev) => {
+      cat.items = linesToArray(ev.target.value).map(line => {
+        const [name, level] = line.split('|').map(s => (s||'').trim());
+        return { name: name || line.trim(), level: level || 'Core' };
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+$('#addSkillCat').addEventListener('click', () => { state.skills.push({category:'', icon:'⭐', items:[]}); renderSkills(); });
+
+function renderServices() {
+  state.services = state.services || [];
+  const wrap = $('#servicesWrap'); wrap.innerHTML = '';
+  state.services.forEach((s, i) => {
+    const card = el('div', 'subcard');
+    card.innerHTML = `
+      <div class="subcard-head"><span class="tag">${s.title || 'Service ' + (i+1)}</span><button class="remove-btn" type="button">×</button></div>
+      <div class="row2">
+        <div class="field"><label>Icon (emoji)</label><input data-f="icon" value="${escAttr(s.icon)}"></div>
+        <div class="field"><label>Title</label><input data-f="title" value="${escAttr(s.title)}"></div>
+      </div>
+      <div class="field"><label>Description</label><textarea data-f="desc">${escHtml(s.desc)}</textarea></div>`;
+    card.querySelector('.remove-btn').addEventListener('click', () => { state.services.splice(i,1); renderServices(); });
+    card.querySelector('[data-f="icon"]').addEventListener('input', (ev) => { s.icon = ev.target.value; });
+    card.querySelector('[data-f="title"]').addEventListener('input', (ev) => { s.title = ev.target.value; card.querySelector('.tag').textContent = s.title || ('Service ' + (i+1)); });
+    card.querySelector('[data-f="desc"]').addEventListener('input', (ev) => { s.desc = ev.target.value; });
+    wrap.appendChild(card);
+  });
+}
+$('#addService').addEventListener('click', () => { state.services = state.services || []; state.services.push({icon:'✨', title:'', desc:''}); renderServices(); });
+
+function renderCerts() {
+  const wrap = $('#certsWrap'); wrap.innerHTML = '';
+  state.certifications.forEach((c, i) => {
+    const card = el('div', 'subcard');
+    card.innerHTML = `
+      <div class="subcard-head"><span class="tag">Cert ${i+1}</span><button class="remove-btn" type="button">×</button></div>
+      <div class="row3">
+        <div class="field"><label>Icon</label><input data-f="icon" value="${escAttr(c.icon)}"></div>
+        <div class="field"><label>Title</label><input data-f="title" value="${escAttr(c.title)}"></div>
+        <div class="field"><label>Date</label><input data-f="date" value="${escAttr(c.date)}"></div>
+      </div>
+      <div class="field"><label>Issuer</label><input data-f="issuer" value="${escAttr(c.issuer)}"></div>`;
+    card.querySelector('.remove-btn').addEventListener('click', () => { state.certifications.splice(i,1); renderCerts(); });
+    card.querySelectorAll('[data-f]').forEach(inp => inp.addEventListener('input', () => { c[inp.dataset.f] = inp.value; }));
+    wrap.appendChild(card);
+  });
+}
+$('#addCert').addEventListener('click', () => { state.certifications.push({icon:'🎓', title:'', issuer:'', date:''}); renderCerts(); });
+
+function renderAchievements() {
+  const wrap = $('#achWrap'); wrap.innerHTML = '';
+  state.achievements.forEach((a, i) => {
+    const card = el('div', 'subcard');
+    card.innerHTML = `
+      <div class="subcard-head"><span class="tag">Achievement ${i+1}</span><button class="remove-btn" type="button">×</button></div>
+      <div class="row3">
+        <div class="field"><label>Icon</label><input data-f="icon" value="${escAttr(a.icon)}"></div>
+        <div class="field"><label>Title</label><input data-f="title" value="${escAttr(a.title)}"></div>
+        <div class="field"><label>Date</label><input data-f="date" value="${escAttr(a.date)}"></div>
+      </div>
+      <div class="field"><label>Description</label><input data-f="desc" value="${escAttr(a.desc)}"></div>`;
+    card.querySelector('.remove-btn').addEventListener('click', () => { state.achievements.splice(i,1); renderAchievements(); });
+    card.querySelectorAll('[data-f]').forEach(inp => inp.addEventListener('input', () => { a[inp.dataset.f] = inp.value; }));
+    wrap.appendChild(card);
+  });
+}
+$('#addAch').addEventListener('click', () => { state.achievements.push({icon:'🏆', title:'', desc:'', date:''}); renderAchievements(); });
+
+function renderProjects() {
+  const wrap = $('#projWrap'); wrap.innerHTML = '';
+  state.projects.forEach((p, i) => {
+    const card = el('div', 'subcard');
+    card.innerHTML = `
+      <div class="subcard-head"><span class="tag">${p.title || 'Project ' + (i+1)}</span><button class="remove-btn" type="button">×</button></div>
+      <div class="row2">
+        <div class="field"><label>Title</label><input data-f="title" value="${escAttr(p.title)}"></div>
+        <div class="field"><label>Categories / filters (comma-separated)</label><input data-f="categories" value="${escAttr(arrayToCsv(p.categories))}" placeholder="Power BI, SQL"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label>Tool line (shown under title)</label><input data-f="toolLine" value="${escAttr(p.toolLine)}" placeholder="Power BI · DAX · Power Query"></div>
+        <div class="field"><label>Tools (comma-separated, used in case study)</label><input data-f="tools" value="${escAttr(arrayToCsv(p.tools))}"></div>
+      </div>
+      <div class="field"><label>Card summary (short, shown on the project card)</label><textarea data-f="summary">${escHtml(p.summary)}</textarea></div>
+      <div class="field"><label>Business problem</label><textarea data-f="businessProblem">${escHtml(p.businessProblem)}</textarea></div>
+      <div class="field"><label>Dataset</label><textarea data-f="dataset">${escHtml(p.dataset)}</textarea></div>
+      <div class="field"><label>Approach</label><textarea data-f="approach">${escHtml(p.approach)}</textarea></div>
+      <div class="field"><label>KPIs (one per line)</label><textarea data-f="kpis">${escHtml(arrayToLines(p.kpis))}</textarea></div>
+      <div class="field"><label>Business questions (one per line)</label><textarea data-f="businessQuestions">${escHtml(arrayToLines(p.businessQuestions))}</textarea></div>
+      <div class="field"><label>Key insights (one per line)</label><textarea data-f="insights">${escHtml(arrayToLines(p.insights))}</textarea></div>
+      <div class="field"><label>Business impact</label><textarea data-f="impact">${escHtml(p.impact)}</textarea></div>
+      <div class="row2">
+        <div class="field"><label>Dashboard image path/URL</label><input data-f="dashboardImage" value="${escAttr(p.dashboardImage)}" placeholder="images/sales-dashboard.png"></div>
+        <div class="field"><label>Live dashboard link</label><input data-f="dashboardLink" value="${escAttr(p.dashboardLink)}"></div>
+      </div>
+      <div class="field"><label>Case study link (optional external link)</label><input data-f="caseStudyLink" value="${escAttr(p.caseStudyLink)}"></div>
+      <div class="field"><label>Attached files — one per line as "Display Name | url"</label><textarea data-f="files">${escHtml((p.files||[]).map(f => `${f.name} | ${f.url}`).join('\n'))}</textarea></div>`;
+
+    card.querySelector('.remove-btn').addEventListener('click', () => { state.projects.splice(i,1); renderProjects(); });
+    const bind = (f, transform) => card.querySelector(`[data-f="${f}"]`).addEventListener('input', (ev) => {
+      p[f] = transform ? transform(ev.target.value) : ev.target.value;
+      if (f === 'title') card.querySelector('.tag').textContent = p.title || ('Project ' + (i+1));
+    });
+    bind('title');
+    bind('categories', csvToArray);
+    bind('toolLine');
+    bind('tools', csvToArray);
+    bind('summary');
+    bind('businessProblem');
+    bind('dataset');
+    bind('approach');
+    bind('kpis', linesToArray);
+    bind('businessQuestions', linesToArray);
+    bind('insights', linesToArray);
+    bind('impact');
+    bind('dashboardImage');
+    bind('dashboardLink');
+    bind('caseStudyLink');
+    card.querySelector('[data-f="files"]').addEventListener('input', (ev) => {
+      p.files = linesToArray(ev.target.value).map(line => {
+        const [name, url] = line.split('|').map(s => (s||'').trim());
+        return { name: name || line.trim(), url: url || '' };
+      });
+    });
+    wrap.appendChild(card);
+  });
+}
+$('#addProj').addEventListener('click', () => {
+  state.projects.unshift({
+    id: uid('proj'), title:'', categories:[], toolLine:'', summary:'', businessProblem:'', dataset:'', approach:'',
+    tools:[], kpis:[], businessQuestions:[], insights:[], impact:'', dashboardImage:'', dashboardLink:'', caseStudyLink:'', files:[]
+  });
+  renderProjects();
+});
+
+function renderStages() {
+  const wrap = $('#stagesWrap'); wrap.innerHTML = '';
+  state.aiAutomation.stages.forEach((s, i) => {
+    const card = el('div', 'subcard');
+    card.innerHTML = `
+      <div class="subcard-head"><span class="tag">Stage ${i+1}</span><button class="remove-btn" type="button">×</button></div>
+      <div class="field"><label>Title</label><input data-f="title" value="${escAttr(s.title)}"></div>
+      <div class="field"><label>Description</label><input data-f="desc" value="${escAttr(s.desc)}"></div>`;
+    card.querySelector('.remove-btn').addEventListener('click', () => { state.aiAutomation.stages.splice(i,1); renderStages(); });
+    card.querySelectorAll('[data-f]').forEach(inp => inp.addEventListener('input', () => { s[inp.dataset.f] = inp.value; }));
+    wrap.appendChild(card);
+  });
+}
+$('#addStage').addEventListener('click', () => { state.aiAutomation.stages.push({title:'', desc:''}); renderStages(); });
+
+// top-level simple field bindings
+function wireSimpleFields() {
+  const map = {
+    h_name: ['hero','name'], h_shortName: ['hero','shortName'], h_status: ['hero','status'],
+    h_taglineStart: ['hero','taglineStart'], h_taglineEnd: ['hero','taglineEnd'], h_bio: ['hero','bio'],
+    h_resumeUrl: ['hero','resumeUrl'], h_linkedin: ['hero','linkedin'], h_github: ['hero','github'],
+    a_summary: ['about','summary'],
+    ai_intro: ['aiAutomation','intro'],
+    c_email: ['contact','email'], c_phone: ['contact','phone'], c_location: ['contact','location'],
+    c_whatsapp: ['contact','whatsapp'], c_linkedin: ['contact','linkedin'], c_github: ['contact','github'],
+  };
+  Object.entries(map).forEach(([id, path]) => {
+    $('#' + id).addEventListener('input', (ev) => { state[path[0]][path[1]] = ev.target.value; });
+  });
+  $('#h_badges').addEventListener('input', (ev) => { state.hero.badges = csvToArray(ev.target.value); });
+  $('#ai_tools').addEventListener('input', (ev) => { state.aiAutomation.toolsLearning = csvToArray(ev.target.value); });
+}
+
+function escAttr(s) { return (s ?? '').toString().replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function escHtml(s) { return (s ?? '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+async function loadDefault() {
+  try {
+    const res = await fetch('data/content.json', { cache: 'no-store' });
+    if (!res.ok) throw new Error('status ' + res.status);
+    state = await res.json();
+    render();
+    showStatus('Loaded data/content.json');
+  } catch (err) {
+    showStatus('Could not fetch data/content.json — use "Load content.json" to upload it manually.', true);
+  }
+}
+
+$('#loadDefaultBtn').addEventListener('click', loadDefault);
+
+$('#loadFile').addEventListener('change', (ev) => {
+  const file = ev.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      state = JSON.parse(reader.result);
+      render();
+      showStatus('Loaded ' + file.name);
+    } catch (err) {
+      showStatus('That file isn\u2019t valid JSON.', true);
+    }
+  };
+  reader.readAsText(file);
+});
+
+$('#saveBtn').addEventListener('click', () => {
+  if (!state) { showStatus('Nothing to save yet — load your data first.', true); return; }
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'content.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  showStatus('Downloaded content.json — replace the copy in your data/ folder with this one.');
+});
+
+wireSimpleFields();
+loadDefault();
+</script>
+</body>
+</html>

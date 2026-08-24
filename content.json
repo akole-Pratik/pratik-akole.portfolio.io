@@ -1,0 +1,334 @@
+{
+  "hero": {
+    "name": "Pratik Santosh Akole",
+    "shortName": "Pratik",
+    "status": "Open to opportunities",
+    "taglineStart": "Data Analyst",
+    "taglineEnd": "AI & Automation",
+    "bio": "I turn messy, large-scale product and sales data into clean, decision-ready insight — through SQL, Python, Power BI and Excel, with a growing toolkit of AI-driven automation.",
+    "resumeUrl": "",
+    "linkedin": "",
+    "github": "",
+    "stats": [
+      {
+        "value": "2+",
+        "label": "Yrs Experience"
+      },
+      {
+        "value": "10K+",
+        "label": "Records Audited"
+      },
+      {
+        "value": "3",
+        "label": "Companies"
+      }
+    ],
+    "badges": [
+      "Python",
+      "SQL",
+      "Power BI",
+      "Excel",
+      "DAX",
+      "Data Quality"
+    ]
+  },
+  "about": {
+    "summary": "I'm a Data Analyst with 2+ years of experience in data quality management, validation and reporting across e-commerce catalog and product data. My core stack is SQL, Excel, Power BI and Python (Pandas) — covering the full path from raw data cleaning to interactive dashboards and stakeholder reporting. I hold a PG Certification in AI & Machine Learning and a BE in Electronics & Telecommunication, and I was recognised with the eClerx Values Award (Dec 2025) for excellence in project delivery.",
+    "quickFacts": [
+      {
+        "icon": "📧",
+        "label": "Email",
+        "value": "akoleps98@gmail.com"
+      },
+      {
+        "icon": "📞",
+        "label": "Phone",
+        "value": "+91 8446186985"
+      },
+      {
+        "icon": "📍",
+        "label": "Location",
+        "value": "Navi Mumbai, India"
+      },
+      {
+        "icon": "🏆",
+        "label": "Award",
+        "value": "eClerx Values Award — Dec 2025"
+      },
+      {
+        "icon": "🎓",
+        "label": "Education",
+        "value": "BE (E&TC) · PG in AI & ML"
+      }
+    ]
+  },
+  "experience": [
+    {
+      "id": "exp-eclerx",
+      "company": "eClerx",
+      "role": "Data Analyst, E-Commerce",
+      "period": "March 2025 – Present",
+      "current": true,
+      "points": [
+        "Audited and cleaned 10,000+ product records per cycle, resolving data inconsistencies and lifting catalog accuracy by an estimated 15–20%",
+        "Led category and taxonomy mapping for the product catalog, improving searchability and reducing misclassified listings by roughly 10%",
+        "Built and enforced a QC checklist for product data, cutting recurring data errors flagged in downstream review by an estimated 20%",
+        "Collaborated with cross-functional teams to standardize data validation rules, reducing manual rework time",
+        "Awarded the eClerx Values Award (Dec 2025) for exceptional commitment & excellence"
+      ]
+    },
+    {
+      "id": "exp-contexio",
+      "company": "Contexio LLP",
+      "role": "Research Analyst, E-Commerce",
+      "period": "June 2023 – July 2024",
+      "current": false,
+      "points": [
+        "Analysed large product datasets to identify catalog quality gaps, driving data enrichment initiatives that improved listing completeness",
+        "Owned end-to-end data cleaning and preprocessing workflows, improving dataset reliability ahead of reporting cycles",
+        "Ran quality checks across multiple datasets, reducing the data inconsistency rate by an estimated 15%",
+        "Designed and maintained Power BI dashboards used by the team to track weekly performance and support decision-making",
+        "Delivered structured reports to stakeholders, supporting faster, data-backed business decisions"
+      ]
+    },
+    {
+      "id": "exp-technocolab",
+      "company": "Technocolab Software Pvt. Ltd",
+      "role": "Data Scientist Intern (Part-time, concurrent)",
+      "period": "Feb 2024 – March 2024",
+      "current": false,
+      "points": [
+        "Conducted exploratory data analysis (EDA) on multiple datasets, surfacing trends that improved data accuracy",
+        "Cleaned and processed data from multiple sources to prepare it for analysis",
+        "Built and tested basic predictive models to support analytical use cases"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "category": "Python & Data Science",
+      "icon": "🐍",
+      "items": [
+        {
+          "name": "Python (Pandas, data cleaning)",
+          "level": "Core"
+        },
+        {
+          "name": "Exploratory Data Analysis",
+          "level": "Core"
+        },
+        {
+          "name": "Predictive & Statistical Modelling",
+          "level": "Working"
+        },
+        {
+          "name": "AI & Automation",
+          "level": "Learning"
+        }
+      ]
+    },
+    {
+      "category": "Data Visualisation",
+      "icon": "📊",
+      "items": [
+        {
+          "name": "Power BI (Dashboards, DAX fundamentals)",
+          "level": "Core"
+        },
+        {
+          "name": "MS Excel (Pivot Tables, VLOOKUP, Slicers)",
+          "level": "Core"
+        },
+        {
+          "name": "Dashboard Design",
+          "level": "Core"
+        }
+      ]
+    },
+    {
+      "category": "SQL & Data Management",
+      "icon": "🗄️",
+      "items": [
+        {
+          "name": "SQL (Joins, Aggregations, Query Writing)",
+          "level": "Core"
+        },
+        {
+          "name": "Data Validation & QC Audits",
+          "level": "Core"
+        },
+        {
+          "name": "Taxonomy & Category Mapping",
+          "level": "Core"
+        }
+      ]
+    },
+    {
+      "category": "AI & Emerging Tech",
+      "icon": "🤖",
+      "items": [
+        {
+          "name": "Generative AI Tools for analysis",
+          "level": "Working"
+        },
+        {
+          "name": "Prompt Engineering",
+          "level": "Learning"
+        },
+        {
+          "name": "Workflow Automation",
+          "level": "Learning"
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "icon": "📊",
+      "title": "Excel Automation",
+      "desc": "Automated, self-updating Excel workbooks — dashboards, pivot-driven reports, and macros that remove repetitive manual work."
+    },
+    {
+      "icon": "🤖",
+      "title": "AI Automation",
+      "desc": "AI-powered workflows that automate recurring data and reporting tasks, from data cleanup to scheduled insight generation."
+    },
+    {
+      "icon": "💬",
+      "title": "AI Prompts",
+      "desc": "Custom, tested prompt sets for analysis, reporting and content tasks — built to give consistent, reliable AI outputs."
+    },
+    {
+      "icon": "📁",
+      "title": "Excel Templates",
+      "desc": "Ready-to-use Excel templates — trackers, dashboards, and reporting sheets — built with clean formulas and clear structure."
+    },
+    {
+      "icon": "🧠",
+      "title": "AI Context Creation",
+      "desc": "Structured context and knowledge files that make AI tools (like Claude or ChatGPT) understand your business and data accurately."
+    }
+  ],
+  "certifications": [
+    {
+      "icon": "🎓",
+      "title": "PG Certification in AI & Machine Learning",
+      "issuer": "Itvedant Education Pvt. Ltd.",
+      "date": "May 2021 – Jan 2022"
+    }
+  ],
+  "achievements": [
+    {
+      "icon": "🏆",
+      "title": "eClerx Values Award",
+      "desc": "Recognised for commitment and excellence in project delivery.",
+      "date": "Dec 2025"
+    }
+  ],
+  "projects": [
+    {
+      "id": "proj-sales-dashboard",
+      "title": "Sales Performance Dashboard",
+      "categories": [
+        "Excel"
+      ],
+      "toolLine": "Excel · Pivot Tables · Charts · Slicers",
+      "summary": "An interactive Excel dashboard tracking revenue and performance across 2,000+ sales records, built to guide inventory decisions.",
+      "businessProblem": "Add the real business problem this project solved — e.g. leadership had no fast way to see which products/regions were under- or over-performing each cycle.",
+      "dataset": "2,000+ sales records — describe the source, fields, and time range.",
+      "approach": "Built an interactive dashboard using Pivot Tables, Charts and Slicers to let stakeholders filter revenue and performance by product and region without touching raw data.",
+      "tools": [
+        "Excel",
+        "Pivot Tables",
+        "Charts",
+        "Slicers"
+      ],
+      "kpis": [
+        "Total Revenue",
+        "Revenue by Region",
+        "Top Performing Products"
+      ],
+      "businessQuestions": [
+        "Which products and regions are top performing this cycle?",
+        "Where should inventory be prioritised next?"
+      ],
+      "insights": [
+        "Add a key insight the dashboard revealed."
+      ],
+      "impact": "Identified top-performing products and regions to guide inventory decisions — add a measurable outcome if you have one (e.g. reduced stockouts, faster reporting turnaround).",
+      "dashboardImage": "",
+      "dashboardLink": "",
+      "caseStudyLink": "",
+      "files": []
+    },
+    {
+      "id": "proj-ecommerce-analysis",
+      "title": "E-Commerce Data Analysis",
+      "categories": [
+        "Python",
+        "SQL"
+      ],
+      "toolLine": "Python · Pandas · SQL",
+      "summary": "Cleaned and analysed a multi-table e-commerce dataset to surface revenue trends and buying behaviour at the customer and product level.",
+      "businessProblem": "Add the real business problem this project solved — e.g. the business needed to understand which customer segments and products actually drove revenue.",
+      "dataset": "Multi-table e-commerce dataset — describe the tables, size, and source.",
+      "approach": "Cleaned and joined a multi-table dataset using Pandas and SQL queries, then performed sales, customer and product-level analysis to surface trends.",
+      "tools": [
+        "Python",
+        "Pandas",
+        "SQL"
+      ],
+      "kpis": [
+        "Revenue by Product",
+        "Revenue by Customer Segment"
+      ],
+      "businessQuestions": [
+        "Which products and customer segments drive the most revenue?",
+        "What buying patterns predict repeat purchases?"
+      ],
+      "insights": [
+        "Add a key insight the analysis revealed."
+      ],
+      "impact": "Surfaced revenue trends and buying behaviour patterns — add a measurable outcome if you have one.",
+      "dashboardImage": "",
+      "dashboardLink": "",
+      "caseStudyLink": "",
+      "files": []
+    }
+  ],
+  "aiAutomation": {
+    "intro": "Alongside core analytics, I'm building toward AI-powered, self-serve analysis — where insight generation is assisted, not entirely manual.",
+    "stages": [
+      {
+        "title": "Data Analytics",
+        "desc": "Cleaning, modelling and dashboarding — the foundation."
+      },
+      {
+        "title": "GenAI",
+        "desc": "Using LLMs to summarise, explain and query data faster."
+      },
+      {
+        "title": "AI Automation",
+        "desc": "Automating recurring reporting and data workflows."
+      },
+      {
+        "title": "AI Agents",
+        "desc": "Exploring agentic workflows that act on data autonomously."
+      }
+    ],
+    "toolsLearning": [
+      "ChatGPT / Claude for analysis",
+      "Prompt engineering",
+      "Workflow automation (n8n / Zapier)",
+      "AI agent frameworks"
+    ]
+  },
+  "contact": {
+    "email": "akoleps98@gmail.com",
+    "phone": "+91 8446186985",
+    "location": "Navi Mumbai, India",
+    "whatsapp": "",
+    "linkedin": "",
+    "github": ""
+  }
+}
